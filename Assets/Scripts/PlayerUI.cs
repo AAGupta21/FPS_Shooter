@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
 
     public void BulletCount(float Bullets, float Grenades)
     {
-        BulletsText.text = "/ " + Bullets.ToString();
-        GrenadesText.text = Grenades.ToString();
+        BulletsText.text = Bullets.ToString();
+        GrenadesText.text = "/ " + Grenades.ToString();
     }
 }
