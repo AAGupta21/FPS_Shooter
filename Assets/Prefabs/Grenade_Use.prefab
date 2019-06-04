@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2446414855551285484}
   m_Layer: 0
   m_Name: Grenade_Use
-  m_TagString: Untagged
+  m_TagString: Explosion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,3 +127,6 @@ MonoBehaviour:
   UpwardForce: 10
   ExplosionEffect: {fileID: 1957845651285836074, guid: 40380c548417e814e8d76160b923571b,
     type: 3}
+  layer:
+    serializedVersion: 2
+    m_Bits: 512

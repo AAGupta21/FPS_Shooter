@@ -6,10 +6,14 @@ public class Bullets : MonoBehaviour
 {
     [SerializeField] private float BulletSpeed = 25f;
     [SerializeField] private float BulletMass = 1f;
+    [SerializeField] private float DistToDestroy = 100f;
 
     private void Update()
     {
         transform.position += transform.forward * BulletSpeed * Time.deltaTime * Time.timeScale;
+
+        if (Vector3.Distance(Vector3.zero, transform.position) > DistToDestroy)
+            Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -9,42 +9,53 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float ExplosionRadius = 5f;
     [SerializeField] private float UpwardForce = 5f;
     [SerializeField] private GameObject ExplosionEffect = null;
+    [SerializeField] private LayerMask layer = 0;
+    [SerializeField] private float GrenadeDamage = 20f;
 
-    private float CurrTime = 0f;
-    private bool Exploded = false;
-    
-    private void Update()
+    private void OnEnable()
     {
-        if(CurrTime < DelayToExplosion)
-        {
-            CurrTime += Time.deltaTime;
-        }
-        else
-        {
-            if(!Exploded)
-                Explode();
-        }
+        StartCoroutine(ToExplode());
+    }
+    
+    IEnumerator ToExplode()
+    {
+        yield return new WaitForSeconds(DelayToExplosion);
+        Explode();
     }
 
     private void Explode()
     {
-        Exploded = true;
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
 
         foreach(Collider col in colliders)
         {
             Rigidbody rb = col.gameObject.GetComponent<Rigidbody>();
-            
+
             if(rb != null)
             {
-                rb.AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius);
-                rb.AddRelativeForce(Vector3.up * UpwardForce, ForceMode.Impulse);
+                if (rb.gameObject.tag == "Player")
+                {
+                    Ray ray = new Ray(transform.position, (rb.position - transform.position).normalized);
+
+                    if (!Physics.Raycast(ray, Vector3.Distance(transform.position, rb.position), layer))
+                    {
+                        PlayerHealth.Health -= GrenadeDamage;
+                    }
+                }
+                else
+                {
+                    rb.AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius);
+                    rb.AddRelativeForce(Vector3.up * UpwardForce, ForceMode.Impulse);
+                }
             }
+
         }
 
-        GameObject g = Instantiate(ExplosionEffect, transform.position, transform.rotation, transform);
+        GameObject g = Instantiate(ExplosionEffect, transform.position, ExplosionEffect.transform.rotation, transform);
 
-        Destroy(this.gameObject, 1f);
+        g.GetComponent<ParticleSystem>().Play();
+
+        
+        Destroy(this.gameObject, g.GetComponent<ParticleSystem>().main.duration);
     }
 }

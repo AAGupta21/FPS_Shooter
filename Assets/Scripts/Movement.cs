@@ -20,19 +20,22 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        LateralMovement();
-        MouseMovement();
-
+        Move();
+        
         if (!LookingAround && !MovingAround)
             Time.timeScale = 0.01f;
         else
             Time.timeScale = 1f;
     }
 
-    private void LateralMovement()
+    private void Move()
     {
-        Vector3 DirecFor = transform.GetChild(1).forward;
-        Vector3 DirecRight = transform.GetChild(1).right;
+        Vector3 DirecFor = Camera.main.transform.forward;
+        Vector3 DirecRight = Camera.main.transform.right;
+
+        float Input_Ver = Input.GetAxis("Mouse Y");
+        float Input_Hor = Input.GetAxis("Mouse X");
+
 
         DirecFor.y = 0f;
         DirecRight.y = 0f;
@@ -44,15 +47,9 @@ public class Movement : MonoBehaviour
         else
         {
             MovingAround = true;
-            transform.localPosition += DirecFor * MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical");
-            transform.localPosition += DirecRight * MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal");
+            transform.position += DirecFor * MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Vertical");
+            transform.position += DirecRight * MoveSpeed * Time.fixedDeltaTime * Input.GetAxis("Horizontal");
         }
-    }
-
-    private void MouseMovement()
-    {
-        float Input_Ver = Input.GetAxis("Mouse Y");
-        float Input_Hor = Input.GetAxis("Mouse X");
 
         if (Input_Ver == 0f && Input_Hor == 0f)
         {
@@ -69,7 +66,8 @@ public class Movement : MonoBehaviour
             if (CurrRot.x < -60f)
                 CurrRot.x = -60f;
 
-            transform.GetChild(1).rotation = Quaternion.Euler(CurrRot);
+            transform.GetChild(0).rotation = Quaternion.Euler(CurrRot);
         }
+
     }
 }

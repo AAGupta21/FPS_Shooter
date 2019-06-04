@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
 
         if (GrenadeCount > 0)
         {
-            GameObject g = Instantiate(GrenadePrefab, transform.parent.GetChild(1).GetChild(1).position + transform.parent.GetChild(1).GetChild(1).forward * 0.5f, Quaternion.identity, transform);
-            g.GetComponent<Rigidbody>().AddForce(transform.parent.GetChild(1).GetChild(1).forward * ThrowForce, ForceMode.Impulse);
+            GameObject g = Instantiate(GrenadePrefab, transform.GetChild(0).GetChild(1).position + transform.GetChild(0).GetChild(1).forward * 0.5f, Quaternion.identity, transform);
+            g.GetComponent<Rigidbody>().AddForce(transform.GetChild(0).GetChild(1).forward * ThrowForce, ForceMode.Impulse);
             
             GrenadeCount--;
             playerUI.BulletCount(BulletsCount, GrenadeCount);
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         if(BulletsCount > 0)
         {
-            GameObject g = Instantiate(BulletPrefab, transform.parent.GetChild(1).GetChild(1).position + transform.parent.GetChild(1).GetChild(1).forward * 0.5f, transform.parent.GetChild(1).GetChild(1).rotation, transform);
+            GameObject g = Instantiate(BulletPrefab, transform.GetChild(0).GetChild(1).position + transform.GetChild(0).GetChild(1).forward * 0.5f, transform.GetChild(0).GetChild(1).rotation, transform);
             BulletsCount--;
             playerUI.BulletCount(BulletsCount, GrenadeCount);
         }
