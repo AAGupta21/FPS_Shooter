@@ -18,11 +18,14 @@ public class Bullets : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+        if (other.gameObject.tag != "Enemy_Picking_Collider")
+        {
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
-        if (rb != null)
-            rb.AddForceAtPosition(transform.forward * BulletMass * BulletSpeed, transform.position + (other.gameObject.transform.position - transform.position).normalized * 0.025f);
+            if (rb != null)
+                rb.AddForceAtPosition(transform.forward * BulletMass * BulletSpeed, transform.position + (other.gameObject.transform.position - transform.position).normalized * 0.025f);
 
-        Destroy(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }

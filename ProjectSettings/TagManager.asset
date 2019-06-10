@@ -9,6 +9,8 @@ TagManager:
   - Bullet
   - Explosion
   - Walls
+  - Enemy
+  - Enemy_Picking_Collider
   layers:
   - Default
   - TransparentFX

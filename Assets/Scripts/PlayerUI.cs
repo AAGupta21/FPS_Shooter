@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    private float timer = 60f;
+    public static float timer = 60f;
     
     [SerializeField] private Text TimerText = null;
     [SerializeField] private Text BulletsText = null;
