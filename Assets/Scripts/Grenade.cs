@@ -10,7 +10,6 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float UpwardForce = 5f;
     [SerializeField] private GameObject ExplosionEffect = null;
     [SerializeField] private LayerMask layer = 0;
-    [SerializeField] private float GrenadeDamage = 20f;
 
     private void OnEnable()
     {
@@ -33,13 +32,16 @@ public class Grenade : MonoBehaviour
 
             if(rb != null)
             {
-                if (rb.gameObject.tag == "Player")
+                if (rb.gameObject.tag == "Player" || rb.gameObject.tag == "Enemy")
                 {
                     Ray ray = new Ray(transform.position, (rb.position - transform.position).normalized);
 
                     if (!Physics.Raycast(ray, Vector3.Distance(transform.position, rb.position), layer))
                     {
-                        PlayerHealth.Health -= GrenadeDamage;
+                        if (rb.gameObject.tag == "Player")
+                            PlayerHealth.Alive = false;
+                        else
+                            Destroy(rb.gameObject);
                     }
                 }
                 else

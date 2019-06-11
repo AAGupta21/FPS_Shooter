@@ -25,6 +25,12 @@ public class Bullets : MonoBehaviour
             if (rb != null)
                 rb.AddForceAtPosition(transform.forward * BulletMass * BulletSpeed, transform.position + (other.gameObject.transform.position - transform.position).normalized * 0.025f);
 
+            if (other.gameObject.tag == "Player")
+                PlayerHealth.Alive = false;
+
+            if (other.gameObject.tag == "Enemy")
+                Destroy(other.gameObject);
+
             Destroy(this.gameObject);
         }
     }

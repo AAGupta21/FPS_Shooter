@@ -9,7 +9,6 @@ public class ExplosionCan : MonoBehaviour
     [SerializeField] private float UpwardForce = 8f;
     [SerializeField] private GameObject ExplosionEffect = null;
     [SerializeField] private LayerMask layer = 0;
-    [SerializeField] private float ExplodingCanDamage = 20f;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -27,13 +26,16 @@ public class ExplosionCan : MonoBehaviour
 
             if (rb != null)
             {
-                if (rb.gameObject.tag == "Player")
+                if (rb.gameObject.tag == "Player" || rb.gameObject.tag == "Enemy")
                 {
                     Ray ray = new Ray(transform.position, (rb.position - transform.position).normalized);
 
                     if (!Physics.Raycast(ray, Vector3.Distance(transform.position, rb.position), layer))
                     {
-                        PlayerHealth.Health -= ExplodingCanDamage;
+                        if (rb.gameObject.tag == "Player")
+                            PlayerHealth.Alive = false;
+                        else
+                            Destroy(rb.gameObject);
                     }
                 }
                 else

@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public static float Health = 100f;
-    
+    public static bool Alive = true;
 }

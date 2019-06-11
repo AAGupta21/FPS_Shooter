@@ -9,22 +9,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject BulletPrefab = null;
     [SerializeField] private float ThrowForce = 50f;
     [SerializeField] private GameObject Effect = null;
-    
+
     private int BulletsCount = 0;
     private int GrenadeCount = 0;
 
-    private void Start()
+    private void OnEnable()
     {
         playerUI.BulletCount(BulletsCount, GrenadeCount);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
-            ShootBullets();
+        if (!PlayerUI.StopGame)
+        {
+            if (Input.GetMouseButtonUp(0))
+                ShootBullets();
 
-        if (Input.GetMouseButtonUp(1))
-            ThrowGrenade();
+            if (Input.GetMouseButtonUp(1))
+                ThrowGrenade();
+        }
     }
 
     private void ThrowGrenade()

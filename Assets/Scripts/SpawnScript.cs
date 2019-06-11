@@ -31,7 +31,7 @@ public class SpawnScript : MonoBehaviour
 
     private float timer = 0f;
 
-    private void Start()
+    private void OnEnable()
     {
         GrenadesList = new GameObject[MaxGrenadeCount];
         ExplodingCansList = new GameObject[MaxExplodingCansCount];

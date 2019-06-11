@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private bool MovingAround = false;
     private Vector3 CurrRot = Vector3.zero;
 
-    private void Start()
+    private void OnEnable()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -20,12 +20,15 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        
-        if (!LookingAround && !MovingAround)
-            Time.timeScale = 0.01f;
-        else
-            Time.timeScale = 1f;
+        if(!PlayerUI.StopGame)
+        {
+            Move();
+
+            if (!LookingAround && !MovingAround)
+                Time.timeScale = 0.01f;
+            else
+                Time.timeScale = 1f;
+        }
     }
 
     private void Move()
